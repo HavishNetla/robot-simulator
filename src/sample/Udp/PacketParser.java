@@ -7,8 +7,9 @@ import sample.Util.Vector2d;
 import java.util.ArrayList;
 
 public class PacketParser {
-  private static Pose2d robotPos = new Pose2d(0, 0, 0);
   public static ArrayList<Vector2d> points = new ArrayList<>();
+  public static ArrayList<Vector2d> points1 = new ArrayList<>();
+  private static Pose2d robotPos = new Pose2d(0, 0, 0);
   private static ArrayList<Vector2d> path = new ArrayList<>();
 
   PacketParser() {}
@@ -37,23 +38,27 @@ public class PacketParser {
     String label = split[0]; // ROBOT or POINT or LINE
     switch (label) {
       case "ROBOT":
-        //System.out.println("ROBOT");
+        // System.out.println("ROBOT");
         parseRobot(split[1]);
         break;
       case "POINT":
-        //System.out.println("POINT");
+        // System.out.println("POINT");
         parsePoint(split[1]);
         break;
+      case "POINT1":
+        // System.out.println("POINT");
+        parsePoint1(split[1]);
+        break;
       case "LINE":
-        //System.out.println("LINE");/
+        // System.out.println("LINE");/
         parseLine(split[1]);
         break;
       case "CLEAR":
         clear();
         break;
       default:
-        //System.out.println("default :(");
-        //System.out.println("uh oh");
+        // System.out.println("default :(");
+        // System.out.println("uh oh");
         break;
     }
   }
@@ -74,6 +79,13 @@ public class PacketParser {
     message = message.replace("(", "").replace(")", "").replace(" ", "");
     String[] split = message.split(","); // split the string into an array by commas
     points.add(new Vector2d(Double.parseDouble(split[0]), Double.parseDouble(split[1])));
+  }
+
+  private void parsePoint1(String message) {
+    // message will look like this (0.000,0.000)
+    message = message.replace("(", "").replace(")", "").replace(" ", "");
+    String[] split = message.split(","); // split the string into an array by commas
+    points1.add(new Vector2d(Double.parseDouble(split[0]), Double.parseDouble(split[1])));
   }
 
   private void parseLine(String message) {

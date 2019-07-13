@@ -22,6 +22,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+import static sample.Udp.PacketParser.points1;
+
 public class Main extends Application {
   public static ArrayList<Vector2d> points = new ArrayList<>();
   public static ArrayList<Vector2d> path = new ArrayList<>();
@@ -33,6 +35,7 @@ public class Main extends Application {
 
   @Override
   public void start(Stage primaryStage) throws Exception {
+    points1.clear();
     primaryStage.setTitle("8221 Cubix");
 
     Group rootGroup = new Group();
@@ -135,6 +138,13 @@ public class Main extends Application {
 
       double radius = 5;
       gc.setStroke(new Color(0.2, 0.996, 1, 1.0));
+      gc.strokeOval(screen.x - radius, screen.y - radius, radius * 2, radius * 2);
+    }
+    for(Vector2d x : points1) {
+      Vector2d screen = Screen.cartesianToScreen(x);
+
+      double radius = 5;
+      gc.setStroke(new Color(0.556, 1, 0.058, 1.0));
       gc.strokeOval(screen.x - radius, screen.y - radius, radius * 2, radius * 2);
     }
   }
